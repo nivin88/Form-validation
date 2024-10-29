@@ -1,46 +1,52 @@
-const arr = [];
+const arr = JSON.parse(localStorage.getItem("userData")) || [];
 var editIndex = -1;
 var form = document.getElementById("form");
+
+window.onload = function() {
+  table();
+};
+
 form.addEventListener("submit", function validation(event) {        // submit function
   event.preventDefault();
   let fname = document.getElementById("name").value;
-  let age = document.getElementById("age").value;
+  let password = document.getElementById("password").value;
   if (fname === "") {
     document.getElementById("form").style.boxShadow="15px 10px 26px";
     document.getElementById("nameerror").innerHTML =
       "This Field is Required...";
     document.getElementById("nameerror").style.color = "red";
-    document.getElementById("nameerror").value
+    // document.getElementById("nameerror").value
       "2px 2px 2px  black";
   } else {
     document.getElementById("nameerror").innerHTML = "";
   }
 
-  if (age === "") {
+  if (password === "") {
     document.getElementById("form").style.boxShadow=" 15px 10px 26px";
-    document.getElementById("ageerror").innerHTML = "This Field is Required...";
-    document.getElementById("ageerror").style.color = "red";
-    document.getElementById("ageerror").value
+    document.getElementById("passworderror").innerHTML = "This Field is Required...";
+    document.getElementById("passworderror").style.color = "red";
+    // document.getElementById("ageerror").value
   } else {
-    document.getElementById("ageerror").innerHTML = "";
+    document.getElementById("passworderror").innerHTML = "";
   }
-  if (editIndex !== -1 &&fname !== "" && age !== "") {
+  if (editIndex !== -1 && fname !== "" && password !== "") {
    
     arr[editIndex].name = fname;
-    arr[editIndex].age = age;
+    arr[editIndex].password = password;
     editIndex=-1
-  } else if(fname !== "" && age !== "") {
+  } else if(fname !== "" && password !== "") {
    
     let obj = {
       name: fname,
-      age: age,
+      password: password,
     };
     arr.push(obj);
   }
-  if (fname !== "" && age !== "") {
+  if (fname !== "" && password !== "") {
     document.getElementById("form").style.boxShadow=" 0px 0px 10px 3px goldenrod"
     document.getElementById("name").value = "";
-    document.getElementById("age").value = "";
+    document.getElementById("password").value = "";
+    saveToLocalStorage();
   }
   table();
 });
@@ -52,7 +58,7 @@ function table() {               // table function
     datas += "<tr>";
     datas += "<td>" + (i + 1) + "</td>";
     datas += "<td>" + arr[i].name + " </td>";
-    datas += "<td>" + arr[i].age + " </td>";
+    datas += "<td>" + arr[i].password + " </td>";
     datas +=
       "<td><button onclick='edit(" +
       i +
@@ -71,7 +77,7 @@ function edit(editIt) {                       // edit function
     if (editIt == i) {
       editIndex = i;
       document.getElementById("name").value = arr[i].name;
-      document.getElementById("age").value = arr[i].age;
+      document.getElementById("password").value = arr[i].password;
     }
   }
  
@@ -82,6 +88,10 @@ function edit(editIt) {                       // edit function
 
 function del(deleted) {             // delete function
   arr.splice(deleted, 1);
+  saveToLocalStorage();
   table();
 }
 
+function saveToLocalStorage() {
+  localStorage.setItem("userData", JSON.stringify(arr));
+}
