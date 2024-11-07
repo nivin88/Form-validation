@@ -2,9 +2,9 @@ const arr = JSON.parse(localStorage.getItem("userData")) || [];
 var editIndex = -1;
 var form = document.getElementById("form");
 
-window.onload = function() {
-  table();
-};
+// window.onload = function() {
+//   table();
+// };
 
 form.addEventListener("submit", function validation(event) {        // submit function
   event.preventDefault();
@@ -42,6 +42,27 @@ form.addEventListener("submit", function validation(event) {        // submit fu
     };
     arr.push(obj);
   }
+
+  // et mapi ={
+  //   Name :name ,
+  //   Password : password ,
+    
+  // }l
+  // fetch=("https://672b186e976a834dd02596a7.mockapi.io/student/loginform"
+  //   {method = "post" ,
+     
+      fetch("https://672b186e976a834dd02596a7.mockapi.io/student/loginform", 
+        {method:"POST",
+           headers:{"Content-Type":"application/json"}, 
+           body:JSON.stringify(arr)}
+        )
+        .then((res) =>res.json())
+        .then((data) =>{console.log(data)
+
+        })
+
+  // })
+
   if (fname !== "" && password !== "") {
     document.getElementById("form").style.boxShadow=" 0px 0px 10px 3px goldenrod"
     document.getElementById("name").value = "";
@@ -95,3 +116,37 @@ function del(deleted) {             // delete function
 function saveToLocalStorage() {
   localStorage.setItem("userData", JSON.stringify(arr));
 }
+fetch(`https://672b186e976a834dd02596a7.mockapi.io/student/loginform/${4}`) //get by id
+.then(res =>res.json())
+.then(data =>console.log(data)
+)
+
+
+fetch(`https://672b186e976a834dd02596a7.mockapi.io/student/loginform`) //get 
+.then(res =>res.json())
+.then(data =>console.log(data)
+)
+
+
+fetch(`https://672b186e976a834dd02596a7.mockapi.io/student/loginform/${4}`, //put edit
+  {method:"PUT",
+     headers:{"Content-Type":"application/json"}, 
+     body:JSON.stringify({username:"siva"})}
+  )
+  .then((res) =>res.json())
+  .then((data) =>{console.log(data)
+
+  })
+
+
+  fetch(`https://672b186e976a834dd02596a7.mockapi.io/student/loginform/${id}`, //delete
+    {method:"DELETE",
+      //  headers:{"Content-Type":"application/json"}, 
+    //    body:JSON.stringify(arr)
+    }
+    )
+    // .then((res) =>res.json())
+    // .then((data) =>{console.log(data)
+
+    // })
+
