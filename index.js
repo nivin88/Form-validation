@@ -229,7 +229,7 @@ function addData(data) {
       fetchData(); // Refresh data after addition
     })
     .catch((error) => console.error("Error updating data:", error));
-    alert("There was an error submitting the form. ")
+    alert("Submit sucessfully.")
 }
 // }
 
